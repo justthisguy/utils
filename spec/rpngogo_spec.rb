@@ -53,16 +53,12 @@ describe Rpngogo do
         calc.evaluate.should == "invalid number"
   end
 
-  it "extra" do
+  it "extra 1" do
         calc = Rpngogo.new "3 4 + 6 + *"
         calc.evaluate.should == "not enough arguments"
-
-        calc = Rpngogo.new "Q 4 + 5 6 + *"
-        calc.evaluate.should == "invalid number"
-
   end
 
-  it "'Q 4 + 5 6 + *' = 77" do
+  it "extra 2" do
         calc = Rpngogo.new "Q 4 + 5 6 + *"
         calc.evaluate.should == "invalid number"
   end

@@ -54,13 +54,15 @@ class Rpngogo
   end
 
   def get_arg (expr)
-    # if there are less than 2 arguments, it's just not enough
+    #
+    ascii_for_zero = 48
+    # if there are less than 1 arguments, it's just not enough
     raise SyntaxError if expr.count < 1
     # if last is less than 48, it is not a number so let's look for the next triplet
-    return eval(expr) if expr.last.getbyte(0) < 48
+    return eval(expr) if expr.last.getbyte(0) < ascii_for_zero
     # if it is greater than
     
-    raise StandardError if (arg = expr.pop.getbyte(0)-48) > 9 
+    raise StandardError if (arg = expr.pop.getbyte(0)-ascii_for_zero) > 9 
     arg
   end
 end
