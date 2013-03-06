@@ -17,68 +17,50 @@ class Rpngogo
   end
 
   def evaluate
-    eval expression.split(' ')
+    begin
+      eval expression.split(' ')
+    rescue SyntaxError
+      return "not enough arguments"
+    rescue StandardError
+      return "invalid number"
+    end
   end
 
   private
 
   def eval (expr)
-    puts "eval #{expr}"
+    # puts "eval #{expr}"
     case expr.pop
     when "+"
-      args = get_args(expr)
-      return args[0] + args[1]
+      second = get_arg(expr)
+      first = get_arg(expr)
+      return first + second
     when "-"
-      args = get_args(expr)
-      return args[0] - args[1]
+      second = get_arg(expr)
+      first = get_arg(expr)
+      return first - second
     when "*"
-      args = get_args(expr)
-      return args[0] * args[1]
+      second = get_arg(expr)
+      first = get_arg(expr)
+      return first * second
     when "/"
-      args = get_args(expr)
-      return args[0] / args[1]
+      second = get_arg(expr)
+      first = get_arg(expr)
+      return first / second
     else
-      return "invalid argument"
+      raise StandardError
     end
     
   end
-  
-  def get_args (expr)
-    puts "start get_args #{expr}"
+
+  def get_arg (expr)
     # if there are less than 2 arguments, it's just not enough
-    if expr.count < 2
-      puts "not enough"
-      return "not enough arguments" 
-    end 
+    raise SyntaxError if expr.count < 1
     # if last is less than 48, it is not a number so let's look for the next triplet
-    if expr.last.getbyte(0) < 48
-      puts "not integer #{expr.last.getbyte(0)}"
-      return eval(expr) 
-    end
-    puts "into get_args #{expr}"
-     
-    second = expr.pop.getbyte(0)-48
-    first  = expr.pop.getbyte(0)-48
-    return [first, second]
+    return eval(expr) if expr.last.getbyte(0) < 48
+    # if it is greater than
+    
+    raise StandardError if (arg = expr.pop.getbyte(0)-48) > 9 
+    arg
   end
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 end

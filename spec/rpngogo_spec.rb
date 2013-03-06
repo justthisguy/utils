@@ -42,4 +42,30 @@ describe Rpngogo do
         calc = Rpngogo.new "3 4 + 5 6 + *"
         calc.evaluate.should == 77
   end
+
+  it "'1 +' does not have enough arguments" do
+        calc = Rpngogo.new "1 +"
+        calc.evaluate.should == "not enough arguments"
+  end
+
+  it "'a b +' has invalid number" do
+        calc = Rpngogo.new "a b +"
+        calc.evaluate.should == "invalid number"
+  end
+
+  it "extra" do
+        calc = Rpngogo.new "3 4 + 6 + *"
+        calc.evaluate.should == "not enough arguments"
+
+        calc = Rpngogo.new "Q 4 + 5 6 + *"
+        calc.evaluate.should == "invalid number"
+
+  end
+
+  it "'Q 4 + 5 6 + *' = 77" do
+        calc = Rpngogo.new "Q 4 + 5 6 + *"
+        calc.evaluate.should == "invalid number"
+  end
+
+
 end
