@@ -63,5 +63,14 @@ describe Rpngogo do
         calc.evaluate.should == "invalid number"
   end
 
+  it "extra 3" do
+        calc = Rpngogo.new "5 3 4 + 6 + *"
+        calc.evaluate.should == 65
+  end
+
+  it "extra 4" do
+        calc = Rpngogo.new "14 6 +"
+        calc.evaluate.should == 20
+  end
 
 end

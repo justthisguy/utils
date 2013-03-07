@@ -33,7 +33,9 @@ class Rpngogo
     case expr.pop
     when "+"
       second = get_arg(expr)
+      p "second", second
       first = get_arg(expr)
+      p "first", first
       return first + second
     when "-"
       second = get_arg(expr)
@@ -62,7 +64,29 @@ class Rpngogo
     return eval(expr) if expr.last.getbyte(0) < ascii_for_zero
     # if it is greater than
     
-    raise StandardError if (arg = expr.pop.getbyte(0)-ascii_for_zero) > 9 
+    arg = 0
+    expr.pop.each_byte do |b| 
+      raise StandardError if b-ascii_for_zero > 9 
+      arg = arg*10 + (b-ascii_for_zero) 
+    end
     arg
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end
