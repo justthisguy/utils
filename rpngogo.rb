@@ -33,9 +33,7 @@ class Rpngogo
     case expr.pop
     when "+"
       second = get_arg(expr)
-      p "second", second
       first = get_arg(expr)
-      p "first", first
       return first + second
     when "-"
       second = get_arg(expr)
@@ -52,7 +50,6 @@ class Rpngogo
     else
       raise StandardError
     end
-    
   end
 
   def get_arg (expr)
@@ -71,22 +68,4 @@ class Rpngogo
     end
     arg
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 end
