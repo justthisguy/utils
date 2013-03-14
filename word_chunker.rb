@@ -2,23 +2,34 @@
 
 class WordChunker
 
+  attr_reader :stack, :limit, :string
+  attr_accessor :current_chunk
+  
   def initialize(str, limit)
     @string = str
     @limit = limit
+    @stack = []
+    @current_chunk = ''
   end
 
   def chunk
-    @stack = []
-    @current_chunk = ""
     words.each do |word|
-      if add_this_word_to_current_chunk?(word)
-        @current_chunk << ( @current_chunk.empty? ? "" : " " ) + word
-      else
-        add_to_chunk(@current_chunk)
-        @current_chunk = make_word_addable(word)
-      end
+      process_word(word)
     end
-    add_to_chunk(@current_chunk)
+    add_to_chunk(current_chunk)
+  end
+  
+  def process_word(word)
+    if add_this_word_to_current_chunk?(word)
+      current_chunk << "#{spacer}#{word}"
+    else
+      add_to_chunk(current_chunk)
+      self.current_chunk = make_word_addable(word)
+    end
+  end
+  
+  def spacer
+    current_chunk.empty? ? "" : " "
   end
 
   def self.chunk str, limit
@@ -29,27 +40,25 @@ class WordChunker
   private
 
   def add_this_word_to_current_chunk?(word)
-    @current_chunk.length + word.length + 1 <= @limit
+    current_chunk.length + word.length + 1 <= limit
   end
 
   def add_to_chunk(chunk)
     if !chunk.empty?
-      @stack << chunk
-    else
-      @stack
+      stack << chunk
     end
   end
 
 
   def words
-    @string.split(/\s+/)
+    string.split(/\s+/)
   end
 
   def make_word_addable (word)
-    if word.length  <= @limit
+    if word.length  <= limit
       word
     else
-      word[0..@limit-2] + "…"
+      word[0..limit-2] + "…"
     end
   end
 end
